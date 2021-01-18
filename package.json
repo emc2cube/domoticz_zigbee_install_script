@@ -1,0 +1,34 @@
+{
+  "name": "emc2cube-domoticz_zigbee_install_script",
+  "version": "0.0.1",
+  "description": "Easy install and update script for Domoticz with zigbee2mqtt and MySensors support",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emc2cube/domoticz_zigbee_install_script.git"
+  },
+  "keywords": [
+    "IoT",
+    "Domoticz",
+    "Zigbee",
+    "MySensors",
+    "Homebridge",
+    "HomeKit",
+    "Alexa",
+    "Google Assistant"
+  ],
+  "author": {
+    "name": "Julien Couthouis",
+    "url": "https://github.com/emc2cube"
+  },
+  "contributors": [
+    {
+      "name": "John Christmann",
+      "url": "https://github.com/JohnChristmann/"
+    }
+  ],
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/emc2cube/domoticz_zigbee_install_script/issues"
+  },
+  "homepage": "https://github.com/emc2cube/domoticz_zigbee_install_script#readme"
+}
