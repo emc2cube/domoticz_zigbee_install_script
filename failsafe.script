@@ -1,0 +1,40 @@
+return {
+	on = {
+		timer = {
+		    'every 15 minutes'
+		}
+	},
+	execute = function(domoticz, timer)
+	    if(domoticz.time.isDayTime) then
+	        if(not domoticz.devices('Lights - Shelf').active) then
+	            domoticz.devices('Lights - Shelf').setState('On')
+	            domoticz.notify('Shelf lights turned on')
+	        end
+			if(not domoticz.devices('Lights - Shelf 2').active) then
+	            domoticz.devices('Lights - Shelf 2').setState('On')
+	            domoticz.notify('Shelf 2 lights turned on')
+	        end
+	    else
+	        if(domoticz.devices('Lights - Shelf').active) then
+	            domoticz.devices('Lights - Shelf').setState('Off')
+	            domoticz.notify('Shelf lights turned off')
+	        end
+			if(not domoticz.devices('Lights - Shelf 2').active) then
+	            domoticz.devices('Lights - Shelf 2').setState('On')
+	            domoticz.notify('Shelf 2 lights turned on')
+	        end
+        end
+    
+        if(domoticz.time.matchesRule('between 7:30 and 19:30')) then
+	        if(not domoticz.devices('Lights - Living Room').active) then
+	            domoticz.devices('Lights - Living Room').setState('On')
+	            domoticz.notify('Living Room lights turned on')
+	        end
+	    else
+	        if(domoticz.devices('Lights - Living Room').active) then
+	            domoticz.devices('Lights - Living Room').setState('Off')
+	            domoticz.notify('Living Room lights turned off')
+	        end
+	    end
+	end
+}
