@@ -1,40 +1,49 @@
+-- For more informations on DzVents scripting see
+-- https://www.domoticz.com/wiki/DzVents:_next_generation_Lua_scripting
 return {
-	on = {
-		timer = {
-		    'every 15 minutes'
-		}
-	},
-	execute = function(domoticz, timer)
-	    if(domoticz.time.isDayTime) then
-	        if(not domoticz.devices('Lights - Shelf').active) then
-	            domoticz.devices('Lights - Shelf').setState('On')
-	            domoticz.notify('Shelf lights turned on')
-	        end
-			if(not domoticz.devices('Lights - Shelf 2').active) then
-	            domoticz.devices('Lights - Shelf 2').setState('On')
-	            domoticz.notify('Shelf 2 lights turned on')
-	        end
-	    else
-	        if(domoticz.devices('Lights - Shelf').active) then
-	            domoticz.devices('Lights - Shelf').setState('Off')
-	            domoticz.notify('Shelf lights turned off')
-	        end
-			if(not domoticz.devices('Lights - Shelf 2').active) then
-	            domoticz.devices('Lights - Shelf 2').setState('On')
-	            domoticz.notify('Shelf 2 lights turned on')
-	        end
+    on = {
+        -- Script will check the status of these devices every 15 minutes.
+        -- Edit as needed.
+        timer = {
+            'every 15 minutes'
+        }
+    },
+    execute = function(domoticz, timer)
+        -- This part will use domoticz day/night informations based on your location
+        -- and make sure some lights (ex: grow lights) are on during the day.
+        -- Edit as needed.
+        if (domoticz.time.isDayTime) then
+            if (not domoticz.devices('Lights - Shelf').active) then
+                domoticz.devices('Lights - Shelf').setState('On')
+                domoticz.notify('Shelf lights turned on')
+            end
+            if (not domoticz.devices('Lights - Shelf 2').active) then
+                domoticz.devices('Lights - Shelf 2').setState('On')
+                domoticz.notify('Shelf 2 lights turned on')
+            end
+        else
+            if (domoticz.devices('Lights - Shelf').active) then
+                domoticz.devices('Lights - Shelf').setState('Off')
+                domoticz.notify('Shelf lights turned off')
+            end
+            if (not domoticz.devices('Lights - Shelf 2').active) then
+                domoticz.devices('Lights - Shelf 2').setState('On')
+                domoticz.notify('Shelf 2 lights turned on')
+            end
         end
-    
-        if(domoticz.time.matchesRule('between 7:30 and 19:30')) then
-	        if(not domoticz.devices('Lights - Living Room').active) then
-	            domoticz.devices('Lights - Living Room').setState('On')
-	            domoticz.notify('Living Room lights turned on')
-	        end
-	    else
-	        if(domoticz.devices('Lights - Living Room').active) then
-	            domoticz.devices('Lights - Living Room').setState('Off')
-	            domoticz.notify('Living Room lights turned off')
-	        end
-	    end
-	end
+        -- This part will use a custom time range (use 24h time format)
+        -- and make sure some lights (ex: grow lights) are on during the day.
+        -- Edit and add as many as needed.
+        if (domoticz.time.matchesRule('between 7:30 and 19:30')) then
+            if (not domoticz.devices('Lights - Living Room').active) then
+                domoticz.devices('Lights - Living Room').setState('On')
+                domoticz.notify('Living Room lights turned on')
+            end
+        else
+            if (domoticz.devices('Lights - Living Room').active) then
+                domoticz.devices('Lights - Living Room').setState('Off')
+                domoticz.notify('Living Room lights turned off')
+            end
+        end
+    end
 }

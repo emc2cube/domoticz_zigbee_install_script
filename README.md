@@ -38,20 +38,58 @@ This script and guide are intended to help set up a DIY smart device hub using a
 
 ## Usage
 
-### First run
+### Installation
 
-The following commands will download all the files to the `/home/pi/` folder, and execute the script.
+The following commands will download and install all necessary files to the `/home/pi/` folder.
 
 ```sh
-sudo apt-get install git
-git clone https://github.com/emc2cube/domoticz_zigbee_install_script.git /home/pi/domoticz_zigbee_install_script
+sudo apt-get -y install git
+cd /home/pi/
+git clone https://github.com/emc2cube/domoticz_zigbee_install_script.git
 chmod +x /home/pi/domoticz_zigbee_install_script/update_domoticz.sh
-/home/pi/domoticz_zigbee_install_script/update_domoticz.sh
 ```
 
-### Subsequent updates
+### [Optional] Custom configuration
 
-For next runs the following commands will make sure your ```domoticz_zigbee_install_script``` is up to date, and then update your system.
+By default the script will install and update all components required to support Zigbee, MySensors, and Homebridge (supports Apple HomeKit, Amazon Alexa, and Google Smart Home.)
+You can customize that behavior by editing the script itself, changing variables to **true** or **false** as needed. Though this is not recommended as git may complain if you make changes and then perform a git pull to check for eventual updates of the script.
+
+A better solution is to create a text file named `config` in the `/home/pi/domoticz_zigbee_install_script/` folder containing these options. The script will automatically use configuration options from this file when present.
+
+```sh
+###########
+# Options #
+###########
+#
+# Use domoticz beta channel instead of stable (at your own risk)
+domoticzbeta=false
+#
+# Install Homebridge
+# Provides support for Apple HomeKit through homebridge (https://github.com/homebridge/homebridge)
+# Provides support for Amazon Alexa through homebridge-alexa (https://github.com/NorthernMan54/homebridge-alexa)
+# Provides support for Google Smart Home through homebridge-gsh (https://github.com/oznu/homebridge-gsh)
+# You will need to link these to your accounts - see respective homebridge plugin websites
+homebridge=true
+#
+# Install Zigbee
+# Provides support for Zigbee devices through zigbee2mqtt (https://www.zigbee2mqtt.io) and
+# domoticz integration through domoticz-zigbee2mqtt-plugin (https://github.com/stas-demydiuk/domoticz-zigbee2mqtt-plugin)
+zigbee=true
+#
+# Install MySensors
+# Provides support for MySensors (https://www.mysensors.org)
+mysensors=true
+# Setting for IRQ support, default to pin 18 as used in most recent versions of
+# the MySRaspiGW adapter (https://github.com/emc2cube/MySRaspiGW)
+# Leave empty if your nRF24L01 module do not support IRQ.
+irqpin="18"
+#
+###########
+```
+
+### Running the script
+
+The following commands will make sure your ```domoticz_zigbee_install_script``` is up to date and then update your system.
 
 ```sh
 cd /home/pi/domoticz_zigbee_install_script/ && git pull
@@ -76,7 +114,7 @@ cd /home/pi/domoticz_zigbee_install_script/ && git pull
 	* The OS will perform a network time sync within several minutes of booting, but sensor logging and timers may function at the wrong time until then. In addition, a significant clock change will cause Domoticz to crash.
 	* The installation/update script includes an auto-restart function to protect against this, but installing an RTC is recommended.
 	* Follow the guide [Adding a Real Time Clock to Raspberry Pi](https://learn.adafruit.com/adding-a-real-time-clock-to-raspberry-pi?view=all) to add an RTC to your Raspberry Pi.
-* If a timer event is missed for any reason (such as a communication issue) it will be skipped. For that reason it's recommended to set up a failsafe script (Setup->More Options->Events) in Domoticz. An example dzVents failsafe script `failsafe.script` is included in this repository that checks the status of various switches every 15 minutes and corrects when necessary.
+* If a timer event is missed for any reason (such as a communication issue) it will be skipped. For that reason it's recommended to set up a failsafe script (Setup->More Options->Events) in Domoticz. An example [dzVents](https://www.domoticz.com/wiki/DzVents:_next_generation_Lua_scripting) failsafe script `failsafe.script` is included in this repository that checks the status of various switches every 15 minutes and corrects when necessary.
 
 ## Author(s) contributions
 
