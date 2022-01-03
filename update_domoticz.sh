@@ -89,10 +89,10 @@ then
 	if [ "$(whereis homebridge)" = "homebridge:" ]
 	then
 		echo "homebridge: Installing"
-		if [ "$(whereis node)" = "node:" ]
+		if [ "$(whereis node)" = "node:" ] || [ "$(/usr/bin/node -v | awk -F. '{print $1}')" != "v16" ]
 		then
 			echo "node: Installing..."
-			curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+			curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 			sudo apt-get install -y nodejs
 			sudo npm install -g npm
 			echo "node: Installed."
@@ -168,10 +168,10 @@ then
 	if [ ! -d /opt/zigbee2mqtt ]
 	then
 		echo "zigbee2mqtt: Installing..."
-		if [ "$(whereis node)" = "node:" ]
+		if [ "$(whereis node)" = "node:" ] || [ "$(/usr/bin/node -v | awk -F. '{print $1}')" != "v16" ]
 		then
 			echo "node: Installing..."
-			curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+			curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 			sudo apt-get install -y nodejs
 			sudo npm install -g npm
 			echo "node: Installed."
